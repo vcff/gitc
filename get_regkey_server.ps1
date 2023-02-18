@@ -3,7 +3,15 @@
 # tested with virtualbox server machines on it
 # its not based on build for simplicity
 
-
+$ErrorActionPreference = "Stop"
+try {
+   if(Import-Csv -Path .\serverlist.csv) {
+      Write-Output "serverlist.csv found"
+   }
+}catch {
+   Write-Output "serverlist.csv not found"
+   $_.Exception
+}
 $servers = Import-Csv -Path .\serverlist.csv
 $user = "$computername\nt"
 $password = Read-Host 'What is your password?' -AsSecureString
@@ -38,29 +46,3 @@ foreach ($line in $servers)
         }
     } 
     $result | format-list
-}
-
-
-# Enable-PSRemoting
-# Get-Item WSMan:\localhost\Client\TrustedHosts
-# Set-Item WSMan:\localhost\Client\TrustedHosts -Value 'RemoteServerName'
-# Set-Service WinRM -StartMode Automatic
-# Get-WmiObject -Class win32_service | Where-Object {$_.name -like "WinRM"}
-# Set-Item WSMan:localhost\client\trustedhosts -value *
-# Get-Item WSMan:\localhost\Client\TrustedHosts
-# New-PSSession -ComputerName WIN-915CS1PLH8B
-# Test-WsMan WIN-915CS1PLH8B
-# Invoke-Command –ComputerName WIN-915CS1PLH8B -ScriptBlock {Hostname}
-# Invoke-Command –ComputerName WIN-915CS1PLH8B -Credential Administrator -ScriptBlock {Hostname}
-
-#Windows Server 2012                                                 | MAJOR: 6  MINOR:2  BUILD:  9200
-#Windows Server 2012 R2                                              | MAJOR: 6  MINOR:3  BUILD:  9600
-#Windows Server 2016 RTM 2016-09-26                                  | MAJOR: 10 MINOR:0  BUILD: 14393
-#Windows Server 2016 Fall Creators Update                            | MAJOR: 10 MINOR:0  BUILD: 16299
-#Windows Server 2019 (Semi-Annual Channel) (Datacenter, Standard)    | MAJOR: 10 MINOR:0  BUILD: 17134
-#Windows Server 2019                                                 | MAJOR: 10 MINOR:0  BUILD: 18342
-#Windows Server 2019                                                 | MAJOR: 10 MINOR:0  BUILD: 17763
-#Windows Server 2019                                                 | MAJOR: 10 MINOR:0  BUILD: 19041
-#Windows Server 2019                                                 | MAJOR: 10 MINOR:0  BUILD: 19042
-#Windows Server 2022 (preview)                                       | MAJOR: 10 MINOR:0  BUILD: 20285
-#Windows Server 2022 (standard)                                      | MAJOR: 10 MINOR:0  BUILD: 20348
