@@ -32,14 +32,14 @@ foreach ($line in $servers)
             $TimeOutValue = (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\disk" -Name TimeOutValue).TimeOutValue
 		    Write-Host ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 		    Write-Host "Given Windows Version is "$ProductName" located on "$Hostname  " " 
-		    Write-Host "Queried value "TimeOutValue" from registry Key for "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" is "$TimeOutValue" " 
+		    Write-Host "Queried value "TimeOutValue" from registry Key for "HKLM:\SYSTEM\CurrentControlSet\Services\disk" is "$TimeOutValue" " 
             }
         # Windows Server 2012 and R2 version
         ElseIf (($CurrentMajorVersionNumber -eq "6" -and $CurrentMinorVersionNumber -eq "2" -and $InstallationType -eq "Server") -Or ($CurrentMajorVersionNumber -eq "6" -and $CurrentMinorVersionNumber -eq "3" -and $InstallationType -eq "Server")) {
             $TimeOutValue = (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\disk" -Name TimeOutValue).TimeOutValue
 		    Write-Host ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 		    Write-Host "Given Windows Version is "$ProductName" located on "$Hostname  " " 
-		    Write-Host "Queried value "TimeOutValue" from registry Key for "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" is "$TimeOutValue" " 
+		    Write-Host "Queried value "TimeOutValue" from registry Key for "HKLM:\SYSTEM\CurrentControlSet\Services\disk" is "$TimeOutValue" " 
             }
         Else {
         Write-Host "Given Windows Version is "$ProductName" located on "$Hostname and not Server edition" " 
