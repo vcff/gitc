@@ -1,6 +1,7 @@
 # prerequsity is that on remote server is one username "nt" defined with same "password"
 # "nt" user is part of "remote user" group which allows remote connection"
 # tested with virtualbox server machines on it
+# its not based on build for simplicity
 
 
 $servers = Import-Csv -Path .\serverlist.csv
@@ -13,13 +14,13 @@ foreach ($line in $servers)
     # When calling the computername, you refer the line, and to the particular column name. here we assume it is called "ServerName"
     $result = Invoke-Command -Computername $line.ServerName -Credential $cred -ScriptBlock {
         $Hostname = (Hostname)
-		Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
-		$CurrentMajorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMajorVersionNumber).CurrentMajorVersionNumber
+	Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+	$CurrentMajorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMajorVersionNumber).CurrentMajorVersionNumber
         $CurrentMinorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMinorVersionNumber).CurrentMinorVersionNumber
         $InstallationType = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name InstallationType).InstallationType
-		$ProductName = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
+	$ProductName = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
         #Windows Server 2016 / 2019 / 2022
-		If ($CurrentMajorVersionNumber -eq "10" -and $CurrentMinorVersionNumber -eq "0" -and $InstallationType -eq "Server")  {
+	If ($CurrentMajorVersionNumber -eq "10" -and $CurrentMinorVersionNumber -eq "0" -and $InstallationType -eq "Server")  {
             $TimeOutValue = (Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\disk" -Name TimeOutValue).TimeOutValue
 		    Write-Host ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
 		    Write-Host "Given Windows Version is "$ProductName" located on "$Hostname  " " 
@@ -38,7 +39,6 @@ foreach ($line in $servers)
     } 
     $result | format-list
 }
-
 
 
 # Enable-PSRemoting
