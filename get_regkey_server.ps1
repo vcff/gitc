@@ -3,6 +3,7 @@
 # tested with virtualbox server machines on it
 # its not based on build for simplicity
 
+# Error handling to make sure file is present
 $ErrorActionPreference = "Stop"
 try {
    if(Import-Csv -Path .\serverlist.csv) {
@@ -14,6 +15,7 @@ try {
 }
 $servers = Import-Csv -Path .\serverlist.csv
 $user = "$computername\nt"
+# password is starred/hidden instead of plain text
 $password = Read-Host 'What is your password?' -AsSecureString
 $cred = [PSCredential]::new($user,$password)
 # this goes thru each server read from the CSV. By default, first row is treated as header.
@@ -22,6 +24,7 @@ foreach ($line in $servers)
     # When calling the computername, you refer the line, and to the particular column name. here we assume it is called "ServerName"
     $result = Invoke-Command -Computername $line.ServerName -Credential $cred -ScriptBlock {
         $Hostname = (Hostname)
+	# to add another layer to make sure that script only process server versions based on Major,Minor,Type (BuildNumbers) skipped for simplicity
 	Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 	$CurrentMajorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMajorVersionNumber).CurrentMajorVersionNumber
         $CurrentMinorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMinorVersionNumber).CurrentMinorVersionNumber
