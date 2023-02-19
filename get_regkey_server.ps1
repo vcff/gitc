@@ -46,6 +46,6 @@ foreach ($line in $servers)
             }
         Else {
         Write-Host "Given Windows Version is "$ProductName" located on "$Hostname and not Server edition" " 
-        }
-    } 
+        } 
+    } -ErrorAction SilentlyContinue 
     $result | Export-Csv -Path .\extracted_keys.csv -Delimiter ';' -NoTypeInformation
