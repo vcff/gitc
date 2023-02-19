@@ -25,7 +25,7 @@ foreach ($line in $servers)
     $result = Invoke-Command -Computername $line.ServerName -Credential $cred -ScriptBlock {
         $Hostname = (Hostname)
 	# to add another layer to make sure that script only process server versions based on Major,Minor,Type (BuildNumbers) skipped for simplicity
-	Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+	#Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 	$CurrentMajorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMajorVersionNumber).CurrentMajorVersionNumber
         $CurrentMinorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMinorVersionNumber).CurrentMinorVersionNumber
         $InstallationType = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name InstallationType).InstallationType
@@ -48,4 +48,4 @@ foreach ($line in $servers)
         Write-Host "Given Windows Version is "$ProductName" located on "$Hostname and not Server edition" " 
         }
     } 
-    $result | format-list
+    $result | Export-Csv -Path .\extracted_keys.csv -Delimiter ';' -NoTypeInformation
