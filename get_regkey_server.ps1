@@ -1,7 +1,8 @@
+# my 1st powershell script ever
 # prerequsity is that on remote server is one username "nt" defined with same "password"
 # "nt" user is part of "remote user" group which allows remote connection"
 # tested with virtualbox server machines on it
-# its not based on build for simplicity
+
 
 # Error handling to make sure file is present
 $ErrorActionPreference = "Stop"
@@ -16,6 +17,7 @@ try {
 
 $servers = Import-Csv -Path .\servers.csv
 $user = "$computername\nt"
+# starred password
 $password = Read-Host 'What is your password?' -AsSecureString
 $cred = [PSCredential]::new($user,$password)
 foreach ($line in $servers)
@@ -25,6 +27,7 @@ foreach ($line in $servers)
 		$Hostname = (Hostname)
 		# to add another layer to make sure that script only process server versions based on Major,Minor,Type (BuildNumbers) skipped for simplicity
 		#Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
+		# if something is wrong with registry, it will not proceed to show anything "not tested yet"
 		$CurrentMajorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMajorVersionNumber -EA stop).CurrentMajorVersionNumber
 		$CurrentMinorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMinorVersionNumber -EA stop).CurrentMinorVersionNumber
 		$InstallationType = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name InstallationType -EA stop).InstallationType
@@ -49,6 +52,7 @@ foreach ($line in $servers)
 			} 
 		}
 	} #-ErrorAction SilentlyContinue 
+	# if one server is not "online" available during connection exception is thrown 
 	catch [System.Management.Automation.Remoting.PSRemotingTransportException]  {
 	Write-Host " "$_.Exception" " -ForegroundColor Red
 	}
