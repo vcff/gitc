@@ -23,6 +23,7 @@ foreach ($line in $servers)
 	try {
 	$result = Invoke-Command -Computername $line.ServerName -Credential $cred -ScriptBlock  {
 		$Hostname = (Hostname)
+		# to add another layer to make sure that script only process server versions based on Major,Minor,Type (BuildNumbers) skipped for simplicity
 		#Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
 		$CurrentMajorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMajorVersionNumber -EA stop).CurrentMajorVersionNumber
 		$CurrentMinorVersionNumber = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name CurrentMinorVersionNumber -EA stop).CurrentMinorVersionNumber
