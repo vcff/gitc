@@ -6,7 +6,7 @@
 .EXAMPLE
   ./get_regkey_server.ps1
 .NOTES
-  - prerequsity is that on remote server is defined username "nt" with password and part of remoter membership group for remote connections
+  - prerequsity is that on remote server(s) is defined username "nt" with password and part of remoter membership group for remote connections
 #>
 
 # Error handling to make sure file is present
