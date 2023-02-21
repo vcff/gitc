@@ -1,8 +1,3 @@
-# my 1st powershell script ever
-# prerequsity is that on remote server is one username "nt" defined with same "password"
-# "nt" user is part of "remote user" group which allows remote connection"
-# tested with virtualbox server machines on it
-
 <#
 .Synopsis
    Gathering key value from registry 
@@ -11,7 +6,7 @@
 .EXAMPLE
   ./get_regkey_server.ps1
 .NOTES
-  lorem ipsum 
+  - prerequsity is that on remote server is defined username "nt" with password and part of remoter membership group for remote connections
 #>
 
 # Error handling to make sure file is present
