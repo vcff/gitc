@@ -3,6 +3,16 @@
 # "nt" user is part of "remote user" group which allows remote connection"
 # tested with virtualbox server machines on it
 
+<#
+.Synopsis
+   Gathering key value from registry 
+.DESCRIPTION
+   Gathering key value from registry from specific OS Win releases based on server list hostnames provided in csv file
+.EXAMPLE
+  ./get_regkey_server.ps1
+.NOTES
+  lorem ipsum 
+#>
 
 # Error handling to make sure file is present
 $ErrorActionPreference = "Stop"
