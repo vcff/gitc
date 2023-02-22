@@ -21,14 +21,14 @@ try {
 }
 
 $servers = Import-Csv -Path .\servers.csv
-$user = "$computername\nt"
+#$user = "$computername\nt"
 # starred password
 $password = Read-Host 'What is your password?' -AsSecureString
-$cred = [PSCredential]::new($user,$password)
+#$cred = [PSCredential]::new($user,$password)
 foreach ($line in $servers)
 { 
 	try {
-	$result = Invoke-Command -Computername $line.ServerName -Credential $cred -ScriptBlock  {
+	$result = Invoke-Command -Computername $line.ServerName -ScriptBlock  {
 		$Hostname = (Hostname)
 		# to add another layer to make sure that script only process server versions based on Major,Minor,Type (BuildNumbers) skipped for simplicity
 		#Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
